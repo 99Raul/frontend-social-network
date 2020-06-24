@@ -11,7 +11,7 @@ export default {
 	},
 	getAllComments() {
 		//query what will be displayed in url
-		return Api.get(`/comments/`);
+		return Api.get(`/comment/`);
 	},
 	createUser(user) {
 		return Api.post(`/users/register`, user);
@@ -26,7 +26,7 @@ export default {
 		return Api.post(`/api/token/`, user);
 	},
 	postComment(comment) {
-		return Api.post(`/comments/`, comment);
+		return Api.post(`/comment/`, comment);
 	},
 	createPost(post) {
 		return Api.post(`/posts/`, post);

@@ -1,26 +1,104 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Home from './pages/Home.js';
+import LogIn from './pages/LogIn.js';
+import SignUp from './pages/SignUp.js';
+import About from './pages/About.js';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './components/NavBar';
+import LogOut from './pages/LogOut';
+import Api from './Api';
+import NewPost from './pages/NewPost';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [user, setUser] = React.useState(null);
+	const [posts, setPosts] = React.useState([]);
+	React.useEffect(() => {
+		fetchPosts();
+		let savedTokens = localStorage.getItem('tokens');
+		if (savedTokens) {
+			savedTokens = JSON.parse(savedTokens);
+			Api.checkToken(savedTokens.access).then((res) => {
+				if (res.status === 200) {
+					Api.setToken(savedTokens.access);
+					const savedUser = localStorage.getItem('user');
+					setUser(savedUser);
+				} else {
+					logOut();
+				}
+			});
+		}
+	}, []);
+	const fetchPosts = () => {
+		Api.getAllPosts().then((res) => {
+			setPosts(res.data);
+		});
+	};
+	const signUp = (newUser) => {
+		Api.createUser(newUser).then((res) => {
+			const tokens = res.data;
+			console.log(tokens);
+			Api.setToken(tokens.access);
+			localStorage.setItem('tokens', JSON.stringify(tokens));
+			const { email } = newUser;
+			localStorage.setItem('user', email);
+			setUser(email);
+		});
+	};
+	const logOut = () => {
+		localStorage.removeItem('tokens');
+		localStorage.removeItem('user');
+		setUser(null);
+	};
+	const logIn = (credentials) => {
+		Api.logIn(credentials).then((res) => {
+			console.log(res.data);
+			const tokens = res.data;
+			console.log(tokens);
+			Api.setToken(tokens.access);
+			localStorage.setItem('tokens', JSON.stringify(tokens));
+			localStorage.setItem('user', credentials.email);
+			setUser(credentials.email);
+		});
+	};
+	const postComment = (comment) => {
+		comment.user = user;
+		Api.postComment(comment).then((res) => {
+			fetchPosts();
+		});
+	};
+	const createPost = (post) => {
+		post.user = user;
+		post.comments = [];
+		Api.createPost(post).then((res) => {
+			fetchPosts();
+		});
+	};
+
+	return (
+		<Router>
+			<NavBar user={user} logOut={logOut} />
+			<div className='container'>
+				<Switch>
+					<Route exact path='/'>
+						<Home posts={posts} postComment={postComment} user={user} />
+					</Route>
+					<Route exact path='/login'>
+						<LogIn logIn={logIn} user={user} />
+					</Route>
+					<Route exact path='/signup'>
+						<SignUp submitSignUp={signUp} user={user} />
+					</Route>
+					<Route exact path='/logout' component={LogOut} />
+					<Route exact path='/about' component={About} />
+					<Route exact path='/post'>
+						<NewPost createPost={createPost} />
+					</Route>
+				</Switch>
+			</div>
+		</Router>
+	);
 }
 
 export default App;
