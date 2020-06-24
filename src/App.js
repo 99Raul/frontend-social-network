@@ -10,6 +10,7 @@ import NavBar from './components/NavBar';
 import LogOut from './pages/LogOut';
 import Api from './Api';
 import NewPost from './pages/NewPost';
+import Profile from './pages/Profile';
 
 function App() {
 	const [user, setUser] = React.useState(null);
@@ -77,27 +78,30 @@ function App() {
 	};
 
 	return (
-		<Router>
-			<NavBar user={user} logOut={logOut} />
-			<div className='container'>
-				<Switch>
-					<Route exact path='/'>
-						<Home posts={posts} postComment={postComment} user={user} />
-					</Route>
-					<Route exact path='/login'>
-						<LogIn logIn={logIn} user={user} />
-					</Route>
-					<Route exact path='/signup'>
-						<SignUp submitSignUp={signUp} user={user} />
-					</Route>
-					<Route exact path='/logout' component={LogOut} />
-					<Route exact path='/about' component={About} />
-					<Route exact path='/post'>
-						<NewPost createPost={createPost} />
-					</Route>
-				</Switch>
-			</div>
-		</Router>
+		<div className="app">
+			<Router>
+				<NavBar user={user} logOut={logOut} />
+				<div className='container'>
+					<Switch>
+						<Route exact path='/'>
+							<Home posts={posts} postComment={postComment} user={user} />
+						</Route>
+						<Route exact path='/login'>
+							<LogIn logIn={logIn} user={user} />
+						</Route>
+						<Route exact path='/signup'>
+							<SignUp submitSignUp={signUp} user={user} />
+						</Route>
+						<Route exact path='/logout' component={LogOut} />
+						<Route exact path='/about' component={About} />
+						<Route exact path='/post'>
+							<NewPost createPost={createPost} />
+						</Route>
+						<Route exact path='/profile' component={Profile} />
+					</Switch>
+				</div>
+			</Router>
+		</div>
 	);
 }
 

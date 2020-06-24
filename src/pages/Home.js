@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Post from '../components/Post';
+import './Home.css'
 
 class PostList extends Component {
 	render() {

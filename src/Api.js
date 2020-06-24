@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const Api = axios.create({
 	//Axios creates reusable instances with baseUrl
-	baseURL: 'http://localhost:8000/',
+	baseURL: 'https://limitless-lake-38991.herokuapp.com/',
 });
 export default {
 	getAllPosts() {

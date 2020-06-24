@@ -13,6 +13,7 @@ function NavBar({ user, logOut }) {
 					{!user && <Nav.Link href='/login'>Log in</Nav.Link>}
 					{user && <Nav.Link href='/post'>Post</Nav.Link>}
 					{user && <Nav.Link onClick={logOut}>Log Out</Nav.Link>}
+					{user && <Nav.Link href='/profile'>Profile</Nav.Link>}
 				</Nav>
 				<Form inline>
 					<FormControl type='text' placeholder='Search' className='mr-sm-2' />
