@@ -11,7 +11,7 @@ export default {
 	},
 	getAllComments() {
 		//query what will be displayed in url
-		return Api.get(`/comment/`);
+		return Api.get(`/comments/`);
 	},
 	createUser(user) {
 		return Api.post(`/users/register`, user);

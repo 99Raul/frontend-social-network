@@ -27,6 +27,7 @@ class Post extends Component {
 				<Card.Body>
 					<Card.Title>{this.props.post.title}</Card.Title>
 					<Card.Text>{this.props.post.body}</Card.Text>
+					<Card.Text>{this.props.post.liked}</Card.Text>
 				</Card.Body>
 				<ListGroup className='list-group-flush'>
 					{this.props.post.comments.map((comment, index) => {
