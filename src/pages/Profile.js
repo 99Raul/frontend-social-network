@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+// import axios from 'axios';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 
@@ -9,23 +9,23 @@ const Profile = (props) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const [postList, setPostList] = useState([]);
+	// const [postList, setPostList] = useState([]);
 
-	useEffect(() => {
-		fetchData();
-	}, []);
+	// useEffect(() => {
+	// 	fetchData();
+	// }, []);
 
-	const fetchData = (id) => {
-		axios
-			.get(`https://limitless-lake-38991.herokuapp.com/profile/${id}`)
-			.then((res) => {
-				console.log(res);
-				setPostList(res.data);
-			})
-			.catch((error) => {
-				console.log(error.response);
-			});
-	};
+	// const fetchData = (id) => {
+	// 	axios
+	// 		.get(`https://limitless-lake-38991.herokuapp.com/profile/${id}`)
+	// 		.then((res) => {
+	// 			console.log(res);
+	// 			setPostList(res.data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log(error.response);
+	// 		});
+	// };
 
 	return (
 		<>
