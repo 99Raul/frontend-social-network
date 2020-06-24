@@ -26,7 +26,7 @@ export default {
 		return Api.post(`/api/token/`, user);
 	},
 	postComment(comment) {
-		return Api.post(`/comment/`, comment);
+		return Api.post(`/comments/`, comment);
 	},
 	createPost(post) {
 		return Api.post(`/posts/`, post);
