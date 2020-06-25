@@ -6,7 +6,8 @@ import SignUp from './pages/SignUp.js';
 import About from './pages/About.js';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
+import Navbar2 from './components/Navbar2'
 import LogOut from './pages/LogOut';
 import Api from './Api';
 import NewPost from './pages/NewPost';
@@ -90,7 +91,7 @@ function App() {
 	return (
 		<div className='app'>
 			<Router>
-				<NavBar user={user} logOut={logOut} />
+				<Navbar2 user={user} logOut={logOut} />
 				<div className='container'>
 					<Switch>
 						<Route exact path='/'>

@@ -1,22 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Post from '../components/Post';
-import './Home.css'
+import './Home.css';
 
-class PostList extends Component {
-	render() {
-		return (
-			<div className='posts'>
-				{this.props.posts.map((post) => (
-					<Post
-						key={post.id}
-						post={post}
-						postComment={this.props.postComment}
-						user={this.props.user}
-					/>
-				))}
-			</div>
-		);
-	}
-}
+const PostList = (props) => {
+	return (
+		<div className='posts'>
+			{props.posts.map((post) => (
+				<Post
+					key={post.id}
+					post={post}
+					postComment={props.postComment}
+					user={props.user}
+				/>
+			))}
+		</div>
+	);
+};
 
 export default PostList;
