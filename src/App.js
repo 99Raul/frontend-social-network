@@ -11,10 +11,13 @@ import LogOut from './pages/LogOut';
 import Api from './Api';
 import NewPost from './pages/NewPost';
 import Profile from './pages/Profile';
+import EditPost from './pages/EditPost'
 
 function App() {
 	const [user, setUser] = React.useState(null);
 	const [posts, setPosts] = React.useState([]);
+	// const [editPost, setEditPost] = React.useState([]);
+	// const [authToken, setAuthToken] = useState(null);
 	React.useEffect(() => {
 		fetchPosts();
 		let savedTokens = localStorage.getItem('tokens');
@@ -76,9 +79,16 @@ function App() {
 			fetchPosts();
 		});
 	};
+	const editPosts= (post) => {
+		post.user = user;
+		post.comments = [];
+		Api.editPosts(post).then((res) => {
+			fetchPosts();
+		});
+	};
 
 	return (
-		<div className="app">
+		<div className='app'>
 			<Router>
 				<NavBar user={user} logOut={logOut} />
 				<div className='container'>
@@ -98,11 +108,23 @@ function App() {
 							<NewPost createPost={createPost} />
 						</Route>
 						<Route exact path='/profile' component={Profile} />
+						<Route exact path='/edit'
+							render={(routerProps) => {
+								return (
+									<EditPost
+										editPosts={editPosts}
+										
+									/>
+								);
+							}}
+						/>
 					</Switch>
 				</div>
 			</Router>
 		</div>
 	);
 }
+
+
 
 export default App;

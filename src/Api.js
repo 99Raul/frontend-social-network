@@ -31,4 +31,7 @@ export default {
 	createPost(post) {
 		return Api.post(`/posts/`, post);
 	},
+	editPosts(post) {
+		return Api.put(`/post/`, post);
+	},
 };
