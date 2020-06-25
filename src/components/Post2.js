@@ -22,12 +22,15 @@ import TextField from '@material-ui/core/TextField';
 import { FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CommentIcon from '@material-ui/icons/Comment';
+import { Redirect } from 'react-router-dom';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 500,
 		marginTop: '5px',
 		textAlign: 'center',
+		// backgroundColor:'#121212'
 	},
 	// media: {
 	// 	height: 0,
@@ -54,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 const Post = (props) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
+	const [deleted, setDeleted] = useState(false);
 
 	const handleExpandClick = () => {
 		setExpanded(!expanded);
@@ -71,6 +75,31 @@ const Post = (props) => {
 		setState({ comment: '' });
 	};
 
+	const deletePost = (event) => {
+		// console.log(localStorage.getItem('token'));
+
+		const url = `https://limitless-lake-38991.herokuapp.com/post/${event.target.id}`;
+		// props.token
+		fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		})
+			.then((res) => {
+				console.log(res.data);
+				setDeleted(true);
+			})
+			.catch(console.error);
+		//  alert('You are not authorized');
+	};
+
+	if (deleted) {
+		return <Redirect to='/' />;
+		// return <Redirect to={`/doctors/${props.doctorCity}`} />;
+		// {`/doctor/${props.doctorId}`}
+	}
 	return (
 		<Card className={classes.root}>
 			<CardHeader
@@ -104,6 +133,9 @@ const Post = (props) => {
 				<IconButton aria-label='share'>
 					<ShareIcon />
 				</IconButton>
+				<IconButton aria-label='delete' onClick={deletePost}>
+					<DeleteIcon />
+				</IconButton>
 				<IconButton
 					className={clsx(classes.expand, {
 						[classes.expandOpen]: expanded,
@@ -114,17 +146,17 @@ const Post = (props) => {
 					<ExpandMoreIcon />
 				</IconButton>
 			</CardActions>
-			{props.user && (
-				<Collapse in={expanded} timeout='auto' unmountOnExit>
-					<CardContent>
-						<Typography paragraph>Comments:</Typography>
-						<List>
-							<ListItemText>
-								{props.post.comments.map((comment, index) => {
-									return <ListItem key={index}>{comment}</ListItem>;
-								})}
-							</ListItemText>
-						</List>
+			<Collapse in={expanded} timeout='auto' unmountOnExit>
+				<CardContent>
+					<Typography paragraph>Comments:</Typography>
+					<List>
+						<ListItemText>
+							{props.post.comments.map((comment, index) => {
+								return <ListItem key={index}>{comment}</ListItem>;
+							})}
+						</ListItemText>
+					</List>
+					{props.user && (
 						<FormControl>
 							<TextField
 								id='standard-name'
@@ -141,9 +173,9 @@ const Post = (props) => {
 								Comment
 							</Button>
 						</FormControl>
-					</CardContent>
-				</Collapse>
-			)}
+					)}
+				</CardContent>
+			</Collapse>
 		</Card>
 	);
 };
