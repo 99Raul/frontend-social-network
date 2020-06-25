@@ -7,6 +7,8 @@ import {
 	InputGroup,
 	Button,
 } from 'react-bootstrap';
+// import deleteComment from './DeletePost'
+
 class Post extends Component {
 	constructor(props) {
 		super(props);
@@ -46,6 +48,12 @@ class Post extends Component {
 								Comment
 							</Button>
 						</InputGroup.Append>
+						{/* <Button
+							onClick={deleteComment}
+							// id={}
+							className='btn delete'>
+							Delete
+						</Button> */}
 					</InputGroup>
 				)}
 			</Card>
