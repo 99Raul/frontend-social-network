@@ -6,12 +6,13 @@ import SignUp from './pages/SignUp.js';
 import About from './pages/About.js';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
 import LogOut from './pages/LogOut';
 import Api from './Api';
 import NewPost from './pages/NewPost';
 import Profile from './pages/Profile';
-import EditPost from './pages/EditPost'
+import EditPost from './pages/EditPost';
+import Navbar2 from './components/Navbar2';
 
 function App() {
 	const [user, setUser] = React.useState(null);
@@ -79,7 +80,7 @@ function App() {
 			fetchPosts();
 		});
 	};
-	const editPosts= (post) => {
+	const editPosts = (post) => {
 		post.user = user;
 		post.comments = [];
 		Api.editPosts(post).then((res) => {
@@ -90,7 +91,7 @@ function App() {
 	return (
 		<div className='app'>
 			<Router>
-				<NavBar user={user} logOut={logOut} />
+				<Navbar2 user={user} logOut={logOut} />
 				<div className='container'>
 					<Switch>
 						<Route exact path='/'>
@@ -108,14 +109,11 @@ function App() {
 							<NewPost createPost={createPost} />
 						</Route>
 						<Route exact path='/profile' component={Profile} />
-						<Route exact path='/edit'
+						<Route
+							exact
+							path='/edit'
 							render={(routerProps) => {
-								return (
-									<EditPost
-										editPosts={editPosts}
-										
-									/>
-								);
+								return <EditPost editPosts={editPosts} />;
 							}}
 						/>
 					</Switch>
@@ -124,7 +122,5 @@ function App() {
 		</div>
 	);
 }
-
-
 
 export default App;

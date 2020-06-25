@@ -1,12 +1,12 @@
 import React from 'react';
-import Post from '../components/Post';
+import Post2 from '../components/Post2';
 import './Home.css';
 
 const PostList = (props) => {
 	return (
 		<div className='posts'>
 			{props.posts.map((post) => (
-				<Post
+				<Post2
 					key={post.id}
 					post={post}
 					postComment={props.postComment}

@@ -17,17 +17,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import { ListItemText } from '@material-ui/core';
-import TextField from '@material-ui/core/TextField';
-import { FormControl } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import CommentIcon from '@material-ui/icons/Comment';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 500,
-		marginTop: '5px',
-		textAlign: 'center',
+		maxWidth: 345,
 	},
 	// media: {
 	// 	height: 0,
@@ -46,12 +41,9 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		backgroundColor: red[500],
 	},
-	button: {
-		marginTop: '1px',
-	},
 }));
 
-const Post = (props) => {
+const RecipeReviewCard = (props) => {
 	const classes = useStyles();
 	const [expanded, setExpanded] = React.useState(false);
 
@@ -60,7 +52,7 @@ const Post = (props) => {
 	};
 
 	const [state, setState] = useState({ comment: '' });
-	// console.log(props);
+	console.log(props);
 	const comment = state.comment;
 
 	const createComment = () => {
@@ -84,8 +76,8 @@ const Post = (props) => {
 						<MoreVertIcon />
 					</IconButton>
 				}
-				title={props.post.title}
-				subheader={props.post.created}
+				title={props.title}
+				subheader={props.created}
 			/>
 			{/* <CardMedia
 				className={classes.media}
@@ -119,33 +111,20 @@ const Post = (props) => {
 					<CardContent>
 						<Typography paragraph>Comments:</Typography>
 						<List>
+							<ListItem button>
+								<ListItemAvatar>
+									<Avatar alt={''} src={''} />
+								</ListItemAvatar>
+							</ListItem>
 							<ListItemText>
 								{props.post.comments.map((comment, index) => {
 									return <ListItem key={index}>{comment}</ListItem>;
 								})}
 							</ListItemText>
 						</List>
-						<FormControl>
-							<TextField
-								id='standard-name'
-								placeholder='Post a comment'
-								value={comment}
-								onChange={(e) => setState({ comment: e.target.value })}
-							/>
-							<Button
-								variant='contained'
-								color='primary'
-								className={classes.button}
-								startIcon={<CommentIcon />}
-								onClick={createComment}>
-								Comment
-							</Button>
-						</FormControl>
 					</CardContent>
 				</Collapse>
 			)}
 		</Card>
 	);
 };
-
-export default Post;
